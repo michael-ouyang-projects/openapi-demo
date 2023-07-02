@@ -12,7 +12,8 @@ Provide the configuration in the below image.
 
 ---
 ## 3. Update build.gradle
-### 3-1. Adjust the dependencies block to make it more clear and readable
+### 3-1-1. Add [springdoc openapi starter dependency](https://springdoc.org/) for creating swagger ui
+### 3-1-2. Adjust the dependencies block to make it more clear and readable
 ```groovy
 dependencies {
     // spring
@@ -31,7 +32,7 @@ dependencies {
 }
 ```
 
-### 3-2. Add [openapi java generator plugin](https://openapi-generator.tech/) to plugin block
+### 3-2. Add [openapi java generator plugin](https://openapi-generator.tech/) to plugin block for code generation
 ```groovy
 plugins {
     id 'java'
@@ -41,9 +42,8 @@ plugins {
 }
 ```
 
-### 3-3. Set the [configuration parameters]() for the graphqlCodegen task provided by the plugin
-Parameters contain the location of graphql schemas, output directory, and the package name for the generated interface and model.
-If you just have one openapi specification, you can use the openApiGenerate task provided by the plugin
+### 3-3. Set the [configuration parameters](https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator-gradle-plugin/README.adoc) for the openApiGenerate task provided by the plugin
+Parameters contain the generator, location of the openapi spec, output directory, and the package name for the generated interface and model.
 ```groovy
 openApiGenerate {
 	generatorName = 'spring'
@@ -77,17 +77,11 @@ compileJava.dependsOn tasks.openApiGenerate
 
 ---
 
-## 4. Create [controllers](src/main/java/fun/mouyang/interfaces/graphql/controller) in fun.mouyang.interfaces.openapi.controller
-<img src="images/graphql-controller.png" width=400 alt="graphql-controller">
+## 4. Create [UserController](src/main/java/fun/mouyang/interfaces/rest/controller/UserController.java) in fun.mouyang.interfaces.rest.controller
+<img src="images/rest-controllers.png" width=400 alt="rest-controllers">
 
 ---
 
-## 5. Enable graphiql for interactively exploring the GraphQL API
-You can open the browser and navigate to [localhost](http://localhost:8080/graphiql?path=/graphql) to execute some requests after starting the application.
-```properties
-# GraphQL
-spring.graphql.graphiql.enabled = true
-spring.graphql.graphiql.path = /graphiql
-spring.graphql.schema.locations = classpath:graphql
-```
-<img src="images/graphiql.png">
+## 5. swagger-ui is enable by default if "springdoc-openapi-starter" is in the dependencies block
+You can open the browser and navigate to [localhost](http://localhost:8080/swagger-ui/index.html) to execute some requests after starting the application.
+<img src="images/swagger-ui.png">

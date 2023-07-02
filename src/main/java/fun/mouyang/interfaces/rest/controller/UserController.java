@@ -1,4 +1,4 @@
-package fun.mouyang.interfaces.openapi.controller;
+package fun.mouyang.interfaces.rest.controller;
 
 import fun.mouyang.interfaces.rest.dto.User;
 import org.springframework.http.ResponseEntity;
