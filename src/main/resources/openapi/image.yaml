@@ -1,0 +1,33 @@
+openapi: 3.0.3
+info:
+  title: Image API
+  description: For image upload and download
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+paths:
+  /image:
+    post:
+      tags:
+        - Image
+      operationId: uploadImage
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+                purpose:
+                  type: string
+              required:
+                - image
+      responses:
+        "201":
+          description: upload image successfully
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                type: string

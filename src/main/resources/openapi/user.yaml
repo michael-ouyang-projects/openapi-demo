@@ -1,0 +1,54 @@
+openapi: 3.0.3
+info:
+  title: User API
+  description: For query user's data
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+paths:
+  /user:
+    get:
+      tags:
+        - User
+      summary: Get all users
+      operationId: getAllUsers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+  /user/{id}:
+    get:
+      tags:
+        - User
+      summary: Get a user by ID
+      operationId: getUserById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
