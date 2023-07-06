@@ -1,3 +1,5 @@
+import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
+
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.1.1'
@@ -38,16 +40,23 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-openApiGenerate {
-	generatorName = 'spring'
-	inputSpec = file("${projectDir}/src/main/resources/static/openapi/user.yaml").toString()
-	outputDir = file("${buildDir}/generated/openapi").toString()
-	apiPackage = 'fun.mouyang.interfaces.rest.controller'
-	modelPackage = 'fun.mouyang.interfaces.rest.dto'
-	configOptions = [
-			useSpringBoot3: "true",
-			interfaceOnly: "true"
-	]
+task openApiMultipleGenerate {
+	def openapiDirectory = file("${projectDir}/src/main/resources/static/openapi")
+	openapiDirectory.eachFileRecurse() {spec ->
+		tasks.create("openApiGenerate-${spec.getName()}", GenerateTask.class, {
+			generatorName = 'spring'
+			inputSpec = file("${projectDir}/src/main/resources/static/openapi/${spec.getName()}").toString()
+			outputDir = file("${buildDir}/generated/openapi").toString()
+			apiPackage = 'fun.mouyang.interfaces.rest.controller'
+			modelPackage = 'fun.mouyang.interfaces.rest.dto'
+			validateSpec = false
+			configOptions = [
+					useSpringBoot3: "true",
+					interfaceOnly: "true"
+			]
+		})
+		dependsOn "openApiGenerate-${spec.getName()}"
+	}
 }
 
 sourceSets {
@@ -63,4 +72,4 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-compileJava.dependsOn tasks.openApiGenerate
+compileJava.dependsOn tasks.openApiMultipleGenerate

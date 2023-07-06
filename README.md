@@ -85,3 +85,40 @@ compileJava.dependsOn tasks.openApiGenerate
 ## 5. swagger-ui is enable by default if "springdoc-openapi-starter" is in the dependencies block
 You can open the browser and navigate to [localhost](http://localhost:8080/swagger-ui/index.html) to execute some requests after starting the application.
 <img src="images/swagger-ui.png">
+
+---
+
+## 6. Multiple OpenAPI specifications
+Since openapi-generator doesn't support generating code from multiple OpenAPI specifications in a task yet, we need to create a customized task and utilize the GenerateTask to do so.
+
+### 6-1. Import the GenerateTask class in build.gradle
+```groovy
+import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
+```
+
+### 6-2. Replace the openApiGenerate task with below customized task
+```groovy
+task openApiMultipleGenerate {
+	def openapiDirectory = file("${projectDir}/src/main/resources/static/openapi")
+	openapiDirectory.eachFileRecurse() {spec ->
+		tasks.create("openApiGenerate-${spec.getName()}", GenerateTask.class, {
+			generatorName = 'spring'
+			inputSpec = file("${projectDir}/src/main/resources/static/openapi/${spec.getName()}").toString()
+			outputDir = file("${buildDir}/generated/openapi").toString()
+			apiPackage = 'fun.mouyang.interfaces.rest.controller'
+			modelPackage = 'fun.mouyang.interfaces.rest.dto'
+			validateSpec = false
+			configOptions = [
+				useSpringBoot3: "true",
+				interfaceOnly: "true"
+			]
+		})
+		dependsOn "openApiGenerate-${spec.getName()}"
+	}
+}
+```
+
+### 6-3. Replace the dependsOn task from tasks.openApiGenerate to tasks.openApiMultipleGenerate
+```groovy
+compileJava.dependsOn tasks.openApiMultipleGenerate
+```
