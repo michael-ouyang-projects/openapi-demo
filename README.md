@@ -7,7 +7,7 @@ Describe how to generate REST API interfaces using OpenAPI specifications.
 Provide the configuration in the below image.
 <img src="images/spring-initializr-config.png">
 
-## 2. Create "OpenAPI specifications" in /src/main/resources/openapi
+## 2. Create "OpenAPI specifications" in /src/main/resources/static/openapi
 <img src="images/openapi-specifications.png" width=400 alt="openapi-specifications">
 
 ---
@@ -43,11 +43,11 @@ plugins {
 ```
 
 ### 3-3. Set the [configuration parameters](https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator-gradle-plugin/README.adoc) for the openApiGenerate task provided by the plugin
-Parameters contain the generator, location of the openapi spec, output directory, and the package name for the generated interface and model.
+Parameters contain the generator, location of the openapi specs, output directory, and the package name for the generated interfaces and models.
 ```groovy
 openApiGenerate {
 	generatorName = 'spring'
-	inputSpec = file("${projectDir}/src/main/resources/openapi/user.yaml").toString()
+	inputSpec = file("${projectDir}/src/main/resources/static/openapi/user.yaml").toString()
 	outputDir = file("${buildDir}/generated/openapi").toString()
 	apiPackage = 'fun.mouyang.interfaces.rest.controller'
 	modelPackage = 'fun.mouyang.interfaces.rest.dto'
@@ -58,7 +58,7 @@ openApiGenerate {
 }
 ```
 
-### 3-4. Add the directory that contains the generated interface and model to the project source sets
+### 3-4. Add the directory that contains the generated interfaces and models to the project source sets
 ```groovy
 sourceSets {
     main {

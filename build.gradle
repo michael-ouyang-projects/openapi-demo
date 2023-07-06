@@ -40,13 +40,13 @@ dependencies {
 
 openApiGenerate {
 	generatorName = 'spring'
-	inputSpec = file("${projectDir}/src/main/resources/openapi/user.yaml").toString()
+	inputSpec = file("${projectDir}/src/main/resources/static/openapi/user.yaml").toString()
 	outputDir = file("${buildDir}/generated/openapi").toString()
 	apiPackage = 'fun.mouyang.interfaces.rest.controller'
 	modelPackage = 'fun.mouyang.interfaces.rest.dto'
 	configOptions = [
-		useSpringBoot3: "true",
-		interfaceOnly: "true"
+			useSpringBoot3: "true",
+			interfaceOnly: "true"
 	]
 }
 
