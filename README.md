@@ -86,6 +86,14 @@ compileJava.dependsOn tasks.openApiGenerate
 You can open the browser and navigate to [localhost](http://localhost:8080/swagger-ui/index.html) to execute some requests after starting the application.
 <img src="images/swagger-ui.png">
 
+### 5.1 Render Swagger UI by OpenAPI specifications instead of examining application at runtime
+Add below configuration to application.properties
+```properties
+springdoc.swagger-ui.url = openapi/user.yaml
+```
+Check out the red block in the picture
+<img src="images/swagger-ui-spec.png">
+
 ---
 
 ## 6. Multiple OpenAPI specifications
@@ -122,3 +130,13 @@ task openApiMultipleGenerate {
 ```groovy
 compileJava.dependsOn tasks.openApiMultipleGenerate
 ```
+
+### 6-4 Add all OpenAPI specifications to application.properties
+```properties
+springdoc.swagger-ui.urls[0].name = user
+springdoc.swagger-ui.urls[0].url = openapi/user.yaml
+springdoc.swagger-ui.urls[1].name = image
+springdoc.swagger-ui.urls[1].url = openapi/image.yaml
+```
+You can choose to view different specs in separate pages now.
+<img src="images/swagger-ui-multiple-specs.png">
