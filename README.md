@@ -43,7 +43,7 @@ plugins {
 ```
 
 ### 3-3. Set the [configuration parameters](https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator-gradle-plugin/README.adoc) for the openApiGenerate task provided by the plugin
-Parameters contain the generator, location of the openapi specs, output directory, and the package name for the generated interfaces and models.
+Parameters contain the generator, location of the openapi spec, output directory, and the package name for the generated interfaces and models.
 ```groovy
 openApiGenerate {
 	generatorName = 'spring'
@@ -97,7 +97,7 @@ Check out the red block in the picture
 ---
 
 ## 6. Multiple OpenAPI specifications
-Since openapi-generator doesn't support generating code from multiple OpenAPI specifications in a task yet, we need to create a customized task and utilize the GenerateTask to do so.
+Since openapi-generator doesn't support generating code from multiple OpenAPI specifications in a single task yet, we need to create a customized task and utilize the GenerateTask to do so.
 
 ### 6-1. Import the GenerateTask class in build.gradle
 ```groovy
@@ -131,7 +131,7 @@ task openApiMultipleGenerate {
 compileJava.dependsOn tasks.openApiMultipleGenerate
 ```
 
-### 6-4 Add all OpenAPI specifications to application.properties
+### 6-4. Add all OpenAPI specifications to application.properties
 ```properties
 springdoc.swagger-ui.urls[0].name = user
 springdoc.swagger-ui.urls[0].url = openapi/user.yaml
