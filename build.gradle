@@ -49,10 +49,9 @@ task openApiMultipleGenerate {
 			outputDir = file("${buildDir}/generated/openapi").toString()
 			apiPackage = 'fun.mouyang.interfaces.rest.controller'
 			modelPackage = 'fun.mouyang.interfaces.rest.dto'
-			validateSpec = false
 			configOptions = [
-					useSpringBoot3: "true",
-					interfaceOnly: "true"
+				useSpringBoot3: "true",
+				interfaceOnly: "true"
 			]
 		})
 		dependsOn "openApiGenerate-${spec.getName()}"

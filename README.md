@@ -107,22 +107,21 @@ import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
 ### 6-2. Replace the openApiGenerate task with below customized task
 ```groovy
 task openApiMultipleGenerate {
-	def openapiDirectory = file("${projectDir}/src/main/resources/static/openapi")
-	openapiDirectory.eachFileRecurse() {spec ->
-		tasks.create("openApiGenerate-${spec.getName()}", GenerateTask.class, {
-			generatorName = 'spring'
-			inputSpec = file("${projectDir}/src/main/resources/static/openapi/${spec.getName()}").toString()
-			outputDir = file("${buildDir}/generated/openapi").toString()
-			apiPackage = 'fun.mouyang.interfaces.rest.controller'
-			modelPackage = 'fun.mouyang.interfaces.rest.dto'
-			validateSpec = false
-			configOptions = [
-				useSpringBoot3: "true",
-				interfaceOnly: "true"
-			]
-		})
-		dependsOn "openApiGenerate-${spec.getName()}"
-	}
+    def openapiDirectory = file("${projectDir}/src/main/resources/static/openapi")
+    openapiDirectory.eachFileRecurse() {spec ->
+        tasks.create("openApiGenerate-${spec.getName()}", GenerateTask.class, {
+            generatorName = 'spring'
+            inputSpec = file("${projectDir}/src/main/resources/static/openapi/${spec.getName()}").toString()
+            outputDir = file("${buildDir}/generated/openapi").toString()
+            apiPackage = 'fun.mouyang.interfaces.rest.controller'
+            modelPackage = 'fun.mouyang.interfaces.rest.dto'
+            configOptions = [
+                useSpringBoot3: "true",
+                interfaceOnly: "true"
+            ]
+        })
+        dependsOn "openApiGenerate-${spec.getName()}"
+    }
 }
 ```
 
